@@ -30,7 +30,8 @@ Yorkshire Water Services Limited.
 | Option | Default | Notes |
 | --- | --- | --- |
 | `max_sessions` | `2` | Concurrent WebDriver sessions allowed. |
-| `vnc_password` | _empty_ | Password for the noVNC viewer on port 7900. **Empty falls back to the well-known default `secret` and logs a warning at start.** Set this. |
+| `vnc_enabled` | `false` | When false, noVNC is not running and connections to port 7900 are refused. Set to `true` only when you want to debug a flow visually. |
+| `vnc_password` | _empty_ | Only consulted when `vnc_enabled=true`. Empty falls back to the well-known default `secret` and logs a warning. |
 | `screen_width` | `1920` | Virtual display width in pixels. |
 | `screen_height` | `1080` | Virtual display height in pixels. |
 
@@ -45,9 +46,19 @@ host IP and the published port: `http://<ha-ip>:4444/wd/hub`.
 
 ## Watching the browser
 
-Open `http://<ha-ip>:7900/?autoconnect=1` in a browser. Enter the
-`vnc_password` from your add-on options. Useful when an automation
-fails and you want to see what state the page is in.
+By default the noVNC viewer is disabled and port 7900 refuses
+connections. To enable it:
+
+1. Set `vnc_enabled: true` in the add-on Configuration tab.
+2. Set a private `vnc_password` in the same tab.
+3. Restart the add-on.
+4. Open `http://<ha-ip>:7900/?autoconnect=1` and enter the password.
+
+When you are done debugging, set `vnc_enabled: false` and restart the
+add-on so port 7900 is closed again. The viewer is useful when an
+automation fails and you want to see what state the page is in, but
+keeping it on permanently increases the attack surface for no
+operational benefit.
 
 ## Security
 
@@ -72,9 +83,10 @@ Treat the add-on as you would treat a remote-execution endpoint.
   Wi-Fi (guest gear, smart speakers, IoT relays you do not control)
   can talk to port 4444 by default. A guest VLAN is a sensible
   perimeter.
-- **Set a strong `vnc_password`.** Empty is allowed but logs a warning
-  every start. The noVNC viewer at port 7900 lets observers watch
-  whatever the browser is currently doing.
+- **Keep `vnc_enabled: false` unless you are actively debugging.**
+  Default is false. When false, port 7900 refuses connections.
+- **If you do enable VNC, set a strong `vnc_password`.** Empty falls
+  back to the well-known default `secret` and is no protection.
 - **Other Home Assistant add-ons can also reach this service** via
   the supervisor's add-on network. Anything you would not trust to
   drive a browser as you, do not install on the same Home Assistant.
@@ -115,6 +127,8 @@ the upstream entry point.
 
 | Add-on version | Notes |
 | --- | --- |
+| 1.2.0 | Added `vnc_enabled` (default false). Closes port 7900 by default; opt in for debugging. |
+| 1.1.2 | Empty `vnc_password` explicitly falls back to upstream `secret` with warning aligned to docs. |
 | 1.1.1 | Dropped armv7 (upstream image does not ship that arch). Empty `vnc_password` default with a noisy warning at start. Strengthened security section. |
 | 1.1.0 | First public release. Adds VNC password, screen size, and max sessions options. |
 | 1.0.0 | Internal version. Plain wrapper around `seleniarm/standalone-chromium:latest`. |

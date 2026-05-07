@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0
+
+- Added `vnc_enabled` option (default `false`). When disabled, the
+  add-on starts the upstream entry point, then kills the noVNC and
+  x11vnc processes so port 7900 refuses connections. A periodic
+  re-kill loop catches any supervisord-driven restarts.
+- The Yorkshire Water integration that drives this add-on never uses
+  noVNC, so the new default is more sensible: closed by default, opt
+  in only when actively debugging.
+- README explains the new flow and recommends turning VNC off again
+  after debugging.
+
 ## 1.1.2
 
 - Empty `vnc_password` now explicitly falls back to the upstream

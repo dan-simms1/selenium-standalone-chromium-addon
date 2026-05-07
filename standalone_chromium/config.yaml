@@ -1,5 +1,5 @@
 name: Selenium Standalone Chromium
-version: "1.1.2"
+version: "1.2.0"
 slug: standalone_chromium
 description: >-
   Selenium Grid 4 with a real Chromium browser, packaged as a Home
@@ -18,14 +18,16 @@ ports:
   7900/tcp: 7900
 ports_description:
   4444/tcp: WebDriver / Selenium Grid (no authentication; LAN use only)
-  7900/tcp: noVNC for live browser viewing (password-protected)
+  7900/tcp: noVNC for live browser viewing (only active when vnc_enabled=true)
 options:
   max_sessions: 2
+  vnc_enabled: false
   vnc_password: ""
   screen_width: 1920
   screen_height: 1080
 schema:
   max_sessions: int(1,8)
+  vnc_enabled: bool
   vnc_password: str?
   screen_width: int(800,3840)
   screen_height: int(600,2160)
