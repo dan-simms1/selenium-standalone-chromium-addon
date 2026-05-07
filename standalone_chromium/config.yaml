@@ -1,0 +1,32 @@
+name: Selenium Standalone Chromium
+version: "1.1.0"
+slug: standalone_chromium
+description: >-
+  Selenium Grid 4 with a real Chromium browser, packaged as a Home
+  Assistant add-on. Other integrations and add-ons can drive Chromium
+  through the WebDriver protocol on port 4444.
+url: "https://github.com/dan-simms1/selenium-standalone-chromium-addon"
+arch:
+  - aarch64
+  - amd64
+  - armv7
+startup: services
+boot: auto
+init: false
+host_network: false
+ports:
+  4444/tcp: 4444
+  7900/tcp: 7900
+ports_description:
+  4444/tcp: WebDriver / Selenium Grid (no authentication; LAN use only)
+  7900/tcp: noVNC for live browser viewing (password-protected)
+options:
+  max_sessions: 2
+  vnc_password: secret
+  screen_width: 1920
+  screen_height: 1080
+schema:
+  max_sessions: int(1,8)
+  vnc_password: str
+  screen_width: int(800,3840)
+  screen_height: int(600,2160)
