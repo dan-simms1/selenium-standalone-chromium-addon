@@ -1,4 +1,4 @@
-FROM seleniarm/standalone-chromium:4.20.0-20240425
+FROM seleniarm/standalone-chromium:4.20.0-20240427
 
 USER root
 

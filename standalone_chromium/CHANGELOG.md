@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+- Fix the upstream image tag. v1.1.x and v1.2.0 referenced
+  `seleniarm/standalone-chromium:4.20.0-20240425` but the published
+  tag is `-20240427`. Build now succeeds.
+
 ## 1.2.0
 
 - Added `vnc_enabled` option (default `false`). When disabled, the

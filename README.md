@@ -110,7 +110,7 @@ Treat the add-on as you would treat a remote-execution endpoint.
 
 ## What is inside the image
 
-The add-on layers on top of `seleniarm/standalone-chromium:4.20.0-20240425`,
+The add-on layers on top of `seleniarm/standalone-chromium:4.20.0-20240427`,
 which bundles:
 
 - Selenium Grid 4.20
