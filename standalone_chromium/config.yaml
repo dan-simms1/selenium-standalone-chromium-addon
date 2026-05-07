@@ -1,5 +1,5 @@
 name: Selenium Standalone Chromium
-version: "1.1.0"
+version: "1.1.1"
 slug: standalone_chromium
 description: >-
   Selenium Grid 4 with a real Chromium browser, packaged as a Home
@@ -9,7 +9,6 @@ url: "https://github.com/dan-simms1/selenium-standalone-chromium-addon"
 arch:
   - aarch64
   - amd64
-  - armv7
 startup: services
 boot: auto
 init: false
@@ -22,11 +21,11 @@ ports_description:
   7900/tcp: noVNC for live browser viewing (password-protected)
 options:
   max_sessions: 2
-  vnc_password: secret
+  vnc_password: ""
   screen_width: 1920
   screen_height: 1080
 schema:
   max_sessions: int(1,8)
-  vnc_password: str
+  vnc_password: str?
   screen_width: int(800,3840)
   screen_height: int(600,2160)

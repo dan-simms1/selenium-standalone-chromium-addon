@@ -52,17 +52,49 @@ fails and you want to see what state the page is in.
 ## Security
 
 **Selenium Grid does not authenticate WebDriver requests.** Anyone
-who can reach port 4444 can drive a browser on your machine. The
-add-on intentionally does not expose this port to the internet.
+who can reach port 4444 can:
 
-- Only run this add-on on a trusted home network.
-- Do not forward port 4444 from your router. Ever.
-- Keep the noVNC password (`vnc_password`) set to something private
-  if your network is shared.
+- Open a Chromium session on your hardware.
+- Type into pages on your behalf, including login forms.
+- Read and exfiltrate any cookies set during that session.
+- Probe other services on your local network from the browser.
+- Watch other users' login flows live via the noVNC viewer if it is
+  unprotected.
 
-If you need WebDriver access from outside your home network, put a
-reverse proxy with authentication in front of port 4444. The add-on
-itself does not provide one.
+Treat the add-on as you would treat a remote-execution endpoint.
+
+### Recommended hardening
+
+- **Do not forward port 4444 from your router. Ever.** This is not a
+  service that should ever be on the public internet without an
+  authenticating reverse proxy.
+- **Keep the home network isolated.** Untrusted devices on the same
+  Wi-Fi (guest gear, smart speakers, IoT relays you do not control)
+  can talk to port 4444 by default. A guest VLAN is a sensible
+  perimeter.
+- **Set a strong `vnc_password`.** Empty is allowed but logs a warning
+  every start. The noVNC viewer at port 7900 lets observers watch
+  whatever the browser is currently doing.
+- **Other Home Assistant add-ons can also reach this service** via
+  the supervisor's add-on network. Anything you would not trust to
+  drive a browser as you, do not install on the same Home Assistant.
+- **Backups contain credentials of integrations that use this add-on.**
+  An integration like `ha-yorkshire-water` that drives this Selenium
+  has the user's portal password in its config entry and therefore in
+  the HA backup. Apply the same backup-protection posture you use for
+  any sensitive HA backup (encrypted off-box storage, no public cloud
+  drops without encryption).
+- **If you need WebDriver access from outside your home network**,
+  put a reverse proxy with authentication in front of port 4444. The
+  add-on itself does not provide one.
+
+### What to avoid
+
+- Running unsanitised user-supplied URLs through this add-on. The
+  browser is real and will execute whatever javascript is served to
+  it.
+- Trusting cookie values that the browser ends up with after visiting
+  attacker-controlled pages without scoping them to the expected host.
 
 ## What is inside the image
 
@@ -83,6 +115,7 @@ the upstream entry point.
 
 | Add-on version | Notes |
 | --- | --- |
+| 1.1.1 | Dropped armv7 (upstream image does not ship that arch). Empty `vnc_password` default with a noisy warning at start. Strengthened security section. |
 | 1.1.0 | First public release. Adds VNC password, screen size, and max sessions options. |
 | 1.0.0 | Internal version. Plain wrapper around `seleniarm/standalone-chromium:latest`. |
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.1
+
+- Dropped `armv7` from the supported arch list; the upstream
+  `seleniarm/standalone-chromium` image does not currently ship an
+  armv7 tag.
+- `vnc_password` defaults to empty. An empty password logs a warning
+  on start so it is obvious in the add-on log that the noVNC viewer is
+  unprotected; previously the default was a literal "secret" which
+  was worse.
+- Strengthened the README's security section: explicit attack-surface
+  list, guidance on isolating the LAN, note that other add-ons on the
+  same Home Assistant can reach this add-on, and a backup-handling
+  note for integrations that store credentials.
+
 ## 1.1.0
 
 - First public release on GitHub.
