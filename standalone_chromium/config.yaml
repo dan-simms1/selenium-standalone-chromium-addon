@@ -1,5 +1,5 @@
 name: Selenium Standalone Chromium
-version: "1.1.1"
+version: "1.1.2"
 slug: standalone_chromium
 description: >-
   Selenium Grid 4 with a real Chromium browser, packaged as a Home

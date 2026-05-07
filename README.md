@@ -30,7 +30,7 @@ Yorkshire Water Services Limited.
 | Option | Default | Notes |
 | --- | --- | --- |
 | `max_sessions` | `2` | Concurrent WebDriver sessions allowed. |
-| `vnc_password` | `secret` | Password for the noVNC viewer on port 7900. Change this. |
+| `vnc_password` | _empty_ | Password for the noVNC viewer on port 7900. **Empty falls back to the well-known default `secret` and logs a warning at start.** Set this. |
 | `screen_width` | `1920` | Virtual display width in pixels. |
 | `screen_height` | `1080` | Virtual display height in pixels. |
 

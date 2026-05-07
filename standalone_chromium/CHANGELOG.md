@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.2
+
+- Empty `vnc_password` now explicitly falls back to the upstream
+  default `secret` (instead of silently relying on the upstream image
+  to do that, which was confusing and not what the previous warning
+  claimed). The warning is updated to say so. README updated.
+
 ## 1.1.1
 
 - Dropped `armv7` from the supported arch list; the upstream
